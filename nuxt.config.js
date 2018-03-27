@@ -41,5 +41,9 @@ module.exports = {
                 })
             }
         }
-    }
+    },
+    plugins: [
+        '~plugins/mainLayout',
+        '~plugins/filter'
+    ]
 }

@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "nuxt": "^1.0.0",
+    "qs": "^6.5.1",
     "simplemde": "^1.11.2"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 const state = {
-    user: 'Kim09'
+    isLogin: false
 }
 
 export default state
