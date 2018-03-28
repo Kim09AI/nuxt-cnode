@@ -6,7 +6,7 @@
                 <slot name="content"></slot>
             </template>
             <template v-else>
-                <div class="item" v-for="(item, index) in list" :key="item.id" @click="itemClick(index)">{{ item.title }}</div>
+                <div class="item" v-for="(item, index) in list" :key="index" @click="itemClick(index)">{{ item.title }}</div>
             </template>
         </div>
     </div>
@@ -26,7 +26,7 @@
         },
         methods: {
             itemClick(index) {
-
+                this.$emit('onItemClick', index)
             }
         }
     }

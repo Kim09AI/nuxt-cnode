@@ -2,45 +2,29 @@
     <div class="topic-list" v-if="topicList.length > 0">
         <div class="item" v-for="item in topicList" :key="item.id">
             <nuxt-link to="/">
-                <img class="avatar" :src="item.author.avatar_url" alt="">
+                <img class="avatar" :src="item.author.avatar_url">
             </nuxt-link>
             <div class="reply">
                 <span class="reply-count">{{ item.reply_count }}/</span>
                 <span class="visit-count">{{ item.visit_count }}</span>
             </div>
             <span class="tab" :class="{green: item.top || item.good}">{{ tabFormat(item.tab, item.top, item.good) }}</span>
-            <nuxt-link class="title" to="/">{{ item.title }}</nuxt-link>
+            <nuxt-link class="title" :to="`/topic/${item.id}`">{{ item.title }}</nuxt-link>
             <span class="last-active-time">{{ item.last_reply_at | timeFormatFilter }}</span>
         </div>
     </div>
 </template>
 
 <script>
-    const tabs = {
-        share: '分享',
-        ask: '问答',
-        good: '精华',
-        job: '招聘',
-        dev: '测试'
-    }
+    import { tabFormatMixin } from '~/mixins'
 
     export default {
         name: 'topicList',
+        mixins: [tabFormatMixin],
         props: {
             topicList: {
                 type: Array,
                 default: () => []
-            }
-        },
-        methods: {
-            tabFormat(tab, isTop, isGood) {
-                if (isTop) {
-                    return '置顶'
-                }
-                if (isGood) {
-                    return '精华'
-                }
-                return tabs[tab]
             }
         }
     }
@@ -87,9 +71,9 @@
                 text-overflow ellipsis
                 overflow hidden
                 white-space nowrap
-                word-break break-all
                 flex 1
                 margin-left 5px
+                line-height 20px
                 &:hover
                     text-decoration underline
             .last-active-time

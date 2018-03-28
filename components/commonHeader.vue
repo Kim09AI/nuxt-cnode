@@ -8,7 +8,7 @@
                 <form class="search" @submit.prevent="">
                     <input
                         class="search-input"
-                        :class="{focus: isFocus || mouseover}"
+                        :class="{ focus: isFocus || mouseover }"
                         v-model="searchValue"
                         type="text"
                         autocomplete="off"
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: 'commonHeader',
@@ -75,7 +75,7 @@
             }
         },
         computed: {
-            ...mapState([
+            ...mapGetters([
                 'isLogin'
             ])
         }

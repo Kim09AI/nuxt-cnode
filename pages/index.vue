@@ -15,7 +15,11 @@
             <page-nav :currentPage="page" @onPageChange="pageSwitch"/>
         </div>
         <div slot="slidebar">
-            <panel title="无人回复的话题" :list="noReplyList"/>
+            <user-info-panel v-if="isLogin" title="个人信息" :user="user"/>
+            <div class="post-topic">
+                <nuxt-link class="btn" to="/topic/create">发布话题</nuxt-link>
+            </div>
+            <panel title="无人回复的话题" :list="noReplyList" @onItemClick="noReplyListHandler"/>
             <panel title="客户端二维码">
                 <div class="client-box" slot="content">
                     <img src="https://dn-cnode.qbox.me/FtG0YVgQ6iginiLpf9W4_ShjiLfU" alt="客户端源码地址">
@@ -27,10 +31,11 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import topicList from '../components/topicList'
     import pageNav from '../components/pageNav'
-    import panel from '../components/panel'
-    import { getTopics } from '../api'
+    import userInfoPanel from '../components/userInfoPanel'
+    import { getTopics, getUserDetail } from '../api'
     import scrollFunc from '../utils/scroll'
 
     const _getTopics = async (...args) => {
@@ -80,18 +85,26 @@
             },
             pageSwitch(page) {
                 this.$router.push(`/?tab=${encodeURIComponent(this.tab)}&page=${encodeURIComponent(page)}`)
+            },
+            noReplyListHandler(index) {
+                let item = this.noReplyList[index]
+                this.$router.push(`/topic/${item.id}`)
             }
         },
         components: {
             topicList,
             pageNav,
-            panel
+            userInfoPanel
         },
         computed: {
             noReplyList() {
                 let noReplyList = this.list.filter(item => item.reply_count === 0)
                 return noReplyList
-            }
+            },
+            ...mapGetters([
+                'isLogin',
+                'user'
+            ])
         },
         watch: {
             '$route'(to) {
@@ -119,6 +132,21 @@
             &.active
                 background-color #80bd01
                 color #ffffff
+    .post-topic
+        background-color #ffffff
+        padding 10px
+        margin-bottom 13px
+        .btn
+            display inline-block
+            border-radius 3px
+            background-color #80bd01
+            padding 3px 10px
+            font-size 14px
+            color #ffffff
+            line-height 2em
+            transition all 0.2s ease-in-out
+            &:hover
+                background-color #6ba44e
     .client-box
         text-align center
         img

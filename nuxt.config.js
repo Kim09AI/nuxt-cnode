@@ -27,7 +27,7 @@ module.exports = {
     ** Build configuration
     */
     build: {
-        vendor: ['axios', 'simplemde'],
+        vendor: ['axios', 'simplemde', 'js-cookie', 'qs'],
         /*
         ** Run ESLint on save
         */
@@ -43,7 +43,8 @@ module.exports = {
         }
     },
     plugins: [
-        '~plugins/mainLayout',
-        '~plugins/filter'
+        '~plugins/component',
+        '~plugins/filter',
+        '~plugins/ssrAccessToken'
     ]
 }

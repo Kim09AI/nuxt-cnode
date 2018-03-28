@@ -3,7 +3,7 @@
         <div class="page-nav">
             <span class="btn" @click="prev">«</span>
             <span v-show="showLeftSpot">...</span>
-            <span class="btn" :class="{active: currentPage === page}" v-for="page in showPageArr" :key="page" @click="switchPage(page)">{{ page }}</span>
+            <span class="btn" :class="{ active: currentPage === page }" v-for="page in showPageArr" :key="page" @click="switchPage(page)">{{ page }}</span>
             <span v-show="showRightSpot">...</span>
             <span class="btn" @click="next">»</span>
         </div>
@@ -17,7 +17,7 @@
                 type: Number,
                 default: 1
             },
-            showPage: { // 要展示的页数
+            showPage: { // 要展示的页码数量
                 type: Number,
                 default: 5
             },
@@ -45,6 +45,20 @@
             next() {
                 let isLastPage = this.currentPage === this.total
                 !isLastPage && this.$emit('onPageChange', this.currentPage + 1)
+            },
+            filterArr(arr, min, max) { // 过滤不合法的页码
+                let _arr = [...arr]
+
+                while (_arr[0] < min) {
+                    _arr.shift()
+                }
+
+                let len = _arr.length
+                while (_arr[--len] > max) {
+                    _arr.pop()
+                }
+
+                return _arr
             }
         },
         computed: {
@@ -61,7 +75,7 @@
                 let showPage = this.showPage
                 let total = this.total
                 let currentPage = this.currentPage
-                let centerPage = Math.ceil(this.showPage / 2)
+                let centerPage = Math.ceil(this.showPage / 2) // 处于中间的页码
 
                 if (currentPage <= centerPage) {
                     arr = this.getArr(1, showPage)
@@ -73,6 +87,8 @@
                     let end = currentPage + ~~(showPage / 2)
                     arr = this.getArr(start, end)
                 }
+
+                arr = this.filterArr(arr, 1, this.total)
 
                 return arr
             }
