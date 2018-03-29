@@ -48,13 +48,13 @@ export const getAccessToken = (config) => {
     return accesstoken
 }
 
-// 解析请求头cookie的token值
-export const parseCookieToToken = (cookie) => {
-    if (!cookie) return ''
+// 解析请求头cookie的指定name值
+export const parseCookieByName = (cookie, name) => {
+    if (!cookie || !name) return ''
 
-    let pattern = /access_token=([^&]+)(&|$)/
+    let pattern = new RegExp(`(?:^|\\s)${name}=([^;]*)(?:;|$)`)
     let matched = cookie.match(pattern) || []
-    let accessToken = matched[1]
+    let value = matched[1] || ''
 
-    return accessToken || ''
+    return decodeURIComponent(value)
 }

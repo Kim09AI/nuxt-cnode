@@ -35,18 +35,17 @@
     import topicList from '../components/topicList'
     import pageNav from '../components/pageNav'
     import userInfoPanel from '../components/userInfoPanel'
-    import { getTopics, getUserDetail } from '../api'
+    import { getTopics } from '../api'
     import scrollFunc from '../utils/scroll'
 
     const _getTopics = async (...args) => {
         try {
             let res = await getTopics(...args)
-            console.log('success', typeof res)
             if (res && res.success) {
                 return res.data
             }
         } catch (e) {
-            console.log(e)
+            console.log('fail in index', e.message)
         }
         return []
     }

@@ -63,7 +63,7 @@
                     topicUser: topicUser.data
                 }
             } catch (e) {
-                console.log(e)
+                console.log('fail in topic detail', e.message)
             }
         },
         head() {
@@ -87,13 +87,17 @@
                 this._createReplies(value)
             },
             async _createReplies(value) {
-                let res = await createReplies(this.topic.id, value)
-                if (res.success) {
-                    let markdown = this.$refs.markdown.getMarkdown()
-                    this.$refs.markdown.clear()
+                try {
+                    let res = await createReplies(this.topic.id, value)
+                    if (res.success) {
+                        let markdown = this.$refs.markdown.getMarkdown()
+                        this.$refs.markdown.clear()
 
-                    this.addReplies(markdown, res.reply_id)
-                    this.$Alert.show('评论成功')
+                        this.addReplies(markdown, res.reply_id)
+                        this.$Alert.show('评论成功')
+                    }
+                } catch (e) {
+                    console.log(e)
                 }
             },
             addReplies(markdown, id) {

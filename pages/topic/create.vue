@@ -44,24 +44,30 @@
         methods: {
             commit(value) {
                 this.value = value
-                this.check()
+                if (this.check()) {
+                    this.createTopic()
+                }
             },
             check() {
                 if (this.title.length <= 10) {
                     this.$Alert.show('请输入 10 字以上的标题')
-                    return
+                    return false
                 }
                 if (!this.value) {
                     this.$Alert.show('内容不能为空')
-                    return
+                    return false
                 }
-                this.createTopic()
+                return true
             },
             async createTopic() {
-                let res = await createTopic(this.title, this.value)
-                if (res.success) {
-                    this.$Alert.show('创建成功')
-                    this.$router.push(`/topic/${res.topic_id}`)
+                try {
+                    let res = await createTopic(this.title, this.value)
+                    if (res.success) {
+                        this.$Alert.show('创建成功')
+                        this.$router.push(`/topic/${res.topic_id}`)
+                    }
+                } catch (e) {
+                    console.log(e)
                 }
             },
             tipClick(index) {
