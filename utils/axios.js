@@ -1,9 +1,15 @@
-import axios from 'axios'
+import originAxios from 'axios'
 import qs from 'qs'
 import { getAccessToken } from './index'
 
-axios.defaults.baseURL = 'https://cnodejs.org/api/v1'
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+const axios = originAxios.create({
+    baseURL: 'https://cnodejs.org/api/v1',
+    headers: {
+        post: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+})
 
 // 请求拦截器
 axios.interceptors.request.use(config => {
