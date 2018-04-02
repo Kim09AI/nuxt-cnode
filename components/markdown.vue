@@ -1,9 +1,9 @@
 <template>
-    <div class="textarea-wrapper" v-show="SimpleMDE">
+    <div class="textarea-wrapper" v-show="SimpleMDE" ref="markdown">
         <div v-if="title" class="title">{{ title }}</div>
         <textarea ref="textarea"></textarea>
         <div>
-            <span class="reply-btn" @click="reply">{{ commitText }}</span>
+            <span class="reply-btn" :class="{active: isCommit}" @click="reply">{{ isCommit ? activeText : commitText }}</span>
         </div>
     </div>
 </template>
@@ -15,15 +15,28 @@
     export default {
         name: 'markdown',
         props: {
-            title: String,
+            title: String, // 组件的标题
             commitText: {
                 type: String,
-                default: '回复'
+                default: '提交'
+            },
+            activeText: {
+                type: String,
+                default: '提交中...'
+            },
+            isCommit: { // 是否正在提交
+                type: Boolean,
+                default:false
             },
             placeholder: {
                 type: String,
                 default: 'Try here...'
-            }
+            },
+            initialValue: { // markdown初始值
+                type: String,
+                default: ''
+            },
+            height: Number, // markdown编辑器的高度
         },
         data() {
             return {
@@ -35,13 +48,22 @@
             // 因为SimpleMDE依赖了浏览器的api，在做服务端渲染时会报错，需要动态引入SimpleMDE
             this.SimpleMDE = require('simplemde')
             this.initMarkdown()
+
+            // 覆盖样式
+            if (this.height) {
+                // 限制在当前组件实例内查找
+                let markdown = this.$refs.markdown
+                markdown.getElementsByClassName('CodeMirror')[0].style.cssText = `min-height: ${this.height}px!important;`
+                markdown.getElementsByClassName('CodeMirror-scroll')[0].style.cssText = `min-height: ${this.height}px!important;`
+            }
         },
         methods: {
             initMarkdown() {
                 this.markdown = new this.SimpleMDE({
                     element: this.$refs.textarea,
                     status: false,
-                    placeholder: this.placeholder
+                    placeholder: this.placeholder,
+                    initialValue: this.initialValue
                 })
             },
             reply() {
@@ -85,6 +107,8 @@
             line-height 2em
             cursor pointer
             transition all 0.2s ease-in-out
+            &.active
+                background-color #05c
             &:hover
                 background-color #05c
 </style>

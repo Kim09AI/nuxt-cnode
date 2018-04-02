@@ -30,6 +30,12 @@ axios.interceptors.request.use(config => {
 // 响应拦截器
 axios.interceptors.response.use(response => {
     return response && response.data
-}, err => Promise.reject(err))
+}, err => {
+    // 错误处理
+    if (err.response && err.response.data) {
+        return Promise.resolve(err.response.data)
+    }
+    return Promise.reject(err)
+})
 
 export default axios

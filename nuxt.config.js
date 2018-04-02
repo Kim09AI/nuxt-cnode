@@ -1,9 +1,11 @@
+const { resolve } = require('path')
+
 module.exports = {
     /*
     ** Headers of the page
     */
     head: {
-        title: 'nuxt-cnode',
+        title: 'CNode：Node.js专业中文社区',
         meta: [
             { charset: 'utf-8' },
             {
@@ -46,5 +48,15 @@ module.exports = {
         '~plugins/component',
         '~plugins/filter',
         '~plugins/ssrAccessToken'
-    ]
+    ],
+    router: {
+        extendRoutes(routes) {
+            // 复用topic的create页面
+            routes.push({
+                name: 'edit',
+                path: '/topic/:id/edit',
+                component: resolve(__dirname, 'pages/topic/create.vue')
+            })
+        }
+    }
 }

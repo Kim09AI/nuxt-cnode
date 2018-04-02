@@ -26,7 +26,7 @@
                     :key="menu.text"
                     v-if="menu.login === undefined ||  menu.login === isLogin"
                 >
-                    {{menu.text}}
+                    {{ menu.text }}
                 </span>
             </div>
         </div>
@@ -34,7 +34,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
+
+    let Cookie
 
     export default {
         name: 'commonHeader',
@@ -46,17 +48,23 @@
                 menus: [
                     { text: '首页', path: '/' },
                     { text: '未读消息', path: '', login: true },
-                    { text: '新手入门', path: '/' },
-                    { text: 'API', path: '/' },
-                    { text: '关于', path: '/' },
-                    { text: '注册', path: '/', login: false },
-                    { text: '登录', path: '/', login: false },
-                    { text: '设置', path: '/', login: true },
-                    { text: '退出', handler: '', login: true }
+                    { text: '新手入门', path: '' },
+                    { text: 'API', path: '' },
+                    { text: '关于', path: '' },
+                    { text: '注册', path: '', login: false },
+                    { text: '登录', path: '/login', login: false },
+                    { text: '设置', path: '', login: true },
+                    { text: '退出', handler: 'loginOut', login: true }
                 ]
             }
         },
+        mounted() {
+            Cookie = require('js-cookie')
+        },
         methods: {
+            ...mapActions([
+                'setLoginAndUser'
+            ]),
             toggleFocus(e) {
                 this.isFocus = e.type === 'focus'
             },
@@ -72,6 +80,14 @@
                 if (handler) {
                     this[handler]()
                 }
+            },
+            loginOut() {
+                Cookie.remove('access_token')
+                this.setLoginAndUser({
+                    loginState: false,
+                    user: {}
+                })
+                this.$router.push('/')
             }
         },
         computed: {

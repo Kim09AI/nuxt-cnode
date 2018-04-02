@@ -16,50 +16,37 @@
         </div>
         <div slot="slidebar">
             <user-info-panel v-if="isLogin" title="个人信息" :user="user"/>
-            <div class="post-topic">
-                <nuxt-link class="btn" to="/topic/create">发布话题</nuxt-link>
-            </div>
+            <topic-create-panel v-if="isLogin"/>
             <panel title="无人回复的话题" :list="noReplyList" @onItemClick="noReplyListHandler"/>
-            <panel title="客户端二维码">
-                <div class="client-box" slot="content">
-                    <img src="https://dn-cnode.qbox.me/FtG0YVgQ6iginiLpf9W4_ShjiLfU" alt="客户端源码地址">
-                    <a href="https://github.com/soliury/noder-react-native" target="_blank">客户端源码地址</a>
-                </div>
-            </panel>
+            <client-panel/>
         </div>
     </main-layout>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
-    import topicList from '../components/topicList'
-    import pageNav from '../components/pageNav'
-    import userInfoPanel from '../components/userInfoPanel'
-    import { getTopics } from '../api'
-    import scrollFunc from '../utils/scroll'
-
-    const _getTopics = async (...args) => {
-        try {
-            let res = await getTopics(...args)
-            if (res && res.success) {
-                return res.data
-            }
-        } catch (e) {
-            console.log('fail in index', e.message)
-        }
-        return []
-    }
+    import topicList from '~/components/topicList'
+    import pageNav from '~/components/pageNav'
+    import userInfoPanel from '~/components/userInfoPanel'
+    import topicCreatePanel from '~/components/topicCreatePanel'
+    import clientPanel from '~/components/clientPanel'
+    import { getTopics } from '~/api'
+    import scrollFunc from '~/utils/scroll'
 
     export default {
         name: 'index',
         async asyncData({ query }) {
             let { tab, page } = query
-            let list = await _getTopics(page, tab)
-            return { list }
-        },
-        head() {
-            return {
-                title: 'CNode：Node.js专业中文社区'
+
+            try {
+                let res = await getTopics(page, tab)
+                if (res.success) {
+                    return {
+                        list: res.data
+                    }
+                }
+            } catch (e) {
+                console.log(e)
             }
         },
         data() {
@@ -79,8 +66,14 @@
         },
         methods: {
             async getTopics() {
-                let list = await _getTopics(this.page, this.tab)
-                this.list = list
+                try {
+                    let res = await getTopics(this.page, this.tab)
+                    if (res.success) {
+                        this.list = res.data
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
             },
             pageSwitch(page) {
                 this.$router.push(`/?tab=${encodeURIComponent(this.tab)}&page=${encodeURIComponent(page)}`)
@@ -89,11 +82,6 @@
                 let item = this.noReplyList[index]
                 this.$router.push(`/topic/${item.id}`)
             }
-        },
-        components: {
-            topicList,
-            pageNav,
-            userInfoPanel
         },
         computed: {
             noReplyList() {
@@ -113,6 +101,13 @@
                 this.getTopics()
                 scrollFunc.scrollToTop()
             }
+        },
+        components: {
+            topicList,
+            pageNav,
+            userInfoPanel,
+            topicCreatePanel,
+            clientPanel
         }
     }
 </script>
@@ -131,31 +126,4 @@
             &.active
                 background-color #80bd01
                 color #ffffff
-    .post-topic
-        background-color #ffffff
-        padding 10px
-        margin-bottom 13px
-        .btn
-            display inline-block
-            border-radius 3px
-            background-color #80bd01
-            padding 3px 10px
-            font-size 14px
-            color #ffffff
-            line-height 2em
-            transition all 0.2s ease-in-out
-            &:hover
-                background-color #6ba44e
-    .client-box
-        text-align center
-        img
-            width 200px
-            height 200px
-            margin-bottom 5px
-        a
-            font-size 13px
-            color #778087
-            display block
-            &:hover
-                text-decoration underline
 </style>

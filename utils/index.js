@@ -1,5 +1,3 @@
-import Cookie from 'js-cookie'
-
 const timeFormatArr = [0, 60, 3600, 86400, 2592000, 946080000, Number.MAX_VALUE]
 const timeUnit = ['刚刚', '分钟前', '小时前', '天前', '月前', '年前']
 
@@ -29,10 +27,6 @@ export const tabs = {
     dev: '测试'
 }
 
-export const isLogin = () => !!Cookie.get('access_token')
-
-// Cookie.set('access_token', '0738eb6d-f112-48ed-9a80-740413a2b106', { expires: 30 })
-
 // 获取accesstoken
 export const getAccessToken = (config) => {
     let accesstoken
@@ -42,7 +36,6 @@ export const getAccessToken = (config) => {
         accesstoken = Cookie.get('access_token')
     } else { // 服务端渲染
         accesstoken = config.accesstoken
-        delete config.accesstoken
     }
 
     return accesstoken

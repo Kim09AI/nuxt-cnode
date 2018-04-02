@@ -1,7 +1,7 @@
 <template>
     <div class="tab-header">
         <nuxt-link class="link" to="/">主页&nbsp;/&nbsp;&nbsp;</nuxt-link>
-        <span>{{ text }}</span>
+        <span v-if="text">{{ text }}</span>
     </div>
 </template>
 
@@ -9,10 +9,7 @@
     export default {
         name: 'tabHeader',
         props: {
-            text: {
-                type: String,
-                default: '发布话题'
-            }
+            text: String
         }
     }
 </script>

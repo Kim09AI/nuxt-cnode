@@ -21,10 +21,16 @@ export const getTopicById = (id, mdrender = true) => {
     })
 }
 
-// 获取用户详情
-export const getUserDetail = (loginname) => {
-    return axios.get(`/user/${loginname}`)
+// 收藏或取消主题
+export const topicCollect = (id, collect) => {
+    let url = collect ? '/topic_collect/collect' : '/topic_collect/de_collect'
+    return axios.post(url, {
+        topic_id: id
+    })
 }
+
+// 获取用户详情
+export const getUserDetail = (loginname) => axios.get(`/user/${loginname}`)
 
 // 验证accesstoken
 export const checkAccesstoken = (accesstoken) => {
@@ -42,6 +48,16 @@ export const createTopic = (title, content) => {
     })
 }
 
+// 编辑主题
+export const topicUpdate = (id, title, content, tab) => {
+    return axios.post('/topics/update', {
+        topic_id: id,
+        title,
+        content,
+        tab
+    })
+}
+
 // 评论
 export const createReplies = (topicId, content, reply_id) => {
     return axios.post(`/topic/${topicId}/replies`, {
@@ -49,3 +65,6 @@ export const createReplies = (topicId, content, reply_id) => {
         reply_id
     })
 }
+
+// 点赞
+export const replyLike = (reply_id) => axios.post(`/reply/${reply_id}/ups`)

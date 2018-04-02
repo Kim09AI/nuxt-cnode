@@ -2,10 +2,12 @@
     <panel :title="title">
         <div class="author-info" slot="content">
             <div class="author">
-                <img class="avatar" :src="user.avatar_url">
-                <nuxt-link class="name" to="/">{{ user.loginname }}</nuxt-link>
+                <nuxt-link :to="`/user/${user.loginname}`">
+                    <img class="avatar" :src="user.avatar_url">
+                </nuxt-link>
+                <nuxt-link class="name" :to="`/user/${user.loginname}`">{{ user.loginname }}</nuxt-link>
             </div>
-            <div class="score">积分:&nbsp;{{ user.score}}</div>
+            <div class="score">积分:&nbsp;{{ user.score }}</div>
         </div>
     </panel>
 </template>

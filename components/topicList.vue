@@ -4,11 +4,11 @@
             <nuxt-link to="/">
                 <img class="avatar" :src="item.author.avatar_url">
             </nuxt-link>
-            <div class="reply">
+            <div class="reply" v-if="item.reply_count !== undefined">
                 <span class="reply-count">{{ item.reply_count }}/</span>
                 <span class="visit-count">{{ item.visit_count }}</span>
             </div>
-            <span class="tab" :class="{green: item.top || item.good}">{{ tabFormat(item.tab, item.top, item.good) }}</span>
+            <span v-if="item.tab" class="tab" :class="{ green: item.top || item.good }">{{ tabFormat(item.tab, item.top, item.good) }}</span>
             <nuxt-link class="title" :to="`/topic/${item.id}`">{{ item.title }}</nuxt-link>
             <span class="last-active-time">{{ item.last_reply_at | timeFormatFilter }}</span>
         </div>
