@@ -15,7 +15,19 @@ module.exports = {
             {
                 hid: 'description',
                 name: 'description',
-                content: 'Nuxt.js project'
+                content: '基于vue的Nuxt框架仿cnode社区 - Nuxt.js project'
+            },
+            {
+                name: 'keywords',
+                content: 'vue, vue-router, vuex, nuxt, cnode, blog'
+            },
+            {
+                name: 'author',
+                content: 'Kim09AI'
+            },
+            {
+                'http-equiv': 'Cache-Control',
+                conent: 'no-siteapp'
             }
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -57,6 +69,7 @@ module.exports = {
                 path: '/topic/:id/edit',
                 component: resolve(__dirname, 'pages/topic/create.vue')
             })
-        }
+        },
+        middleware: 'checkRoute'
     }
 }

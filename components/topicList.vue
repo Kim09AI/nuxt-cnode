@@ -1,7 +1,7 @@
 <template>
     <div class="topic-list" v-if="topicList.length > 0">
         <div class="item" v-for="item in topicList" :key="item.id">
-            <nuxt-link to="/">
+            <nuxt-link :to="`/user/${item.author.loginname}`">
                 <img class="avatar" :src="item.author.avatar_url">
             </nuxt-link>
             <div class="reply" v-if="item.reply_count !== undefined">

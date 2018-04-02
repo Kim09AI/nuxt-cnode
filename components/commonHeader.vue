@@ -47,7 +47,7 @@
                 searchValue: '',
                 menus: [
                     { text: '首页', path: '/' },
-                    { text: '未读消息', path: '', login: true },
+                    { text: '未读消息', path: '/user/messages', login: true },
                     { text: '新手入门', path: '' },
                     { text: 'API', path: '' },
                     { text: '关于', path: '' },

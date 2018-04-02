@@ -94,7 +94,7 @@
                     topicUser: topicUser.data
                 }
             } catch (e) {
-                console.log('fail in topic detail', e.message)
+                console.log(e)
             }
         },
         head() {

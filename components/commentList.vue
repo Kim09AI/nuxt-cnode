@@ -3,11 +3,13 @@
         <div class="header">{{ list.length }}&nbsp;回复</div>
         <ul class="comment-list">
             <li class="item" v-for="(item, index) in list" :key="item.id">
-                <img class="avatar" :src="item.author.avatar_url">
+                <nuxt-link :to="`/user/${item.author.loginname}`">
+                    <img class="avatar" :src="item.author.avatar_url">
+                </nuxt-link>
                 <div class="reply-info">
                     <div class="info">
                         <div>
-                            <span class="author">{{ item.author.loginname }}</span>
+                            <nuxt-link class="author" :to="`/user/${item.author.loginname}`">{{ item.author.loginname }}</nuxt-link>
                             <span class="level">{{ index + 1 }}楼•{{ item.create_at | timeFormatFilter }}</span>
                             <span class="reply-by-author" v-if="item.isAuthor">作者</span>
                         </div>

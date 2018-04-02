@@ -68,3 +68,15 @@ export const createReplies = (topicId, content, reply_id) => {
 
 // 点赞
 export const replyLike = (reply_id) => axios.post(`/reply/${reply_id}/ups`)
+
+// 获取消息
+export const getMessages = (mdrender = false) => {
+    return axios.get('/messages', {
+        params: {
+            mdrender
+        }
+    })
+}
+
+// 标记全部已读
+export const messageMarkAll = () => axios.post('/message/mark_all')
