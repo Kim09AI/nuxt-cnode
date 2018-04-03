@@ -83,14 +83,15 @@
         padding 10px
         background-color #ffffff
         .login-pos
-            margin 60px 0 20px 140px
+            margin 60px 0 20px 15%
             .input
                 padding 4px 6px
                 height 20px
                 font-size 4px
                 color #555
                 border-radius 4px
-                width 270px
+                max-width 270px
+                width 90%
                 display inline-block
                 box-shadow inset 0 1px 2px rgba(0, 0, 0, .075)
                 border 1px solid #cccccc

@@ -101,20 +101,23 @@
 <style lang="stylus">
     .header-wrapper
         background-color #444
-        height 50px
         .header
             margin 0 auto
             max-width 1400px
-            height 100%
             display flex
             flex-wrap wrap
             justify-content space-between
             .left
                 display flex
                 align-items center
+                min-height 50px
+                max-width 373px
+                justify-content center
+                flex-wrap wrap
                 .logo
                     width 120px
                     height 28px
+                    padding 7px 0
                 .search
                     width 233px
                     height 26px
@@ -137,9 +140,15 @@
             .right
                 display flex
                 align-items center
+                min-height 50px
+                flex-wrap wrap
                 .menu
                     font-size 13px
                     color #cccccc
                     padding 10px 15px
                     cursor pointer
+
+    @media screen and (max-width: 980px)
+        .header-wrapper
+            margin 0 5px
 </style>

@@ -165,7 +165,7 @@
         padding-left 10px
         .title
             height 20px
-            width 98%
+            width calc(98% - 12px)
             box-shadow 0 0 2px rgba(60,60,60,.5)
             border-radius 4px
             font-size 14px

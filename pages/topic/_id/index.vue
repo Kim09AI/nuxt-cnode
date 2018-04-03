@@ -47,6 +47,9 @@
             <user-info-panel title="作者" :user="topicUser"/>
         </div>
     </main-layout>
+    <div v-else>
+        不是有效的话题id
+    </div>
 </template>
 
 <script>
@@ -257,6 +260,7 @@
             border-radius 3px 3px 0 0
             .title-wrapper
                 margin 8px 0
+                display flex
                 .title
                     font-size 22px
                     font-weight bold
@@ -264,15 +268,18 @@
                     overflow hidden
                     white-space nowrap
                     line-height 130%
-                    display inline-block
+                    flex 1
                 .tab
                     font-size 12px
                     color #999999
                     padding 3px 4px
                     border-radius 3px
+                    height 18px
+                    width 32px
+                    box-sizing border-box
                     background-color #e5e5e5
                     position relative
-                    top -6px
+                    top 8px
                     display inline-block
                     margin-right 7px
                     font-weight bold
@@ -286,6 +293,7 @@
                 display flex
                 justify-content space-between
                 .left
+                    max-width 80%
                     span:before
                         content: ' • '
                 .collection
@@ -296,6 +304,8 @@
                     padding 7px 12px
                     transition all 0.2s ease-in-out
                     cursor pointer
+                    height 34px
+                    box-sizing border-box
                     &:hover
                         background-color #6ba44e
                     &.active

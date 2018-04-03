@@ -16,9 +16,17 @@
         display flex
         justify-content space-between
         min-height 400px
+        box-sizing border-box
+        padding 0 5px
         .content
             flex 1
             max-width 1095px
+            width calc(100% - 290px - 15px)
         .slidebar
-            width 290px
+            flex 0 0 290px
+            margin-left 15px
+
+    @media screen and (max-width: 980px)
+        .slidebar
+            display none
 </style>

@@ -58,4 +58,7 @@
                     height 54px
             .link
                 color #08c
+    @media screen and (max-width: 980px)
+        .footer-wrapper
+            display none
 </style>

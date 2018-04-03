@@ -117,8 +117,10 @@
         color #80bd01
         background-color #f6f6f6
         padding 10px
+        display flex
+        flex-wrap wrap
         .tab
-            padding 3px 4px
+            padding 5px 4px
             border-radius 3px
             margin 0 10px
             font-size 14px
