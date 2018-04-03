@@ -24,6 +24,7 @@
             width calc(100% - 290px - 15px)
         .slidebar
             flex 0 0 290px
+            width 290px
             margin-left 15px
 
     @media screen and (max-width: 980px)
