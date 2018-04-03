@@ -79,20 +79,26 @@
             try {
                 let id = params.id
                 let topic = await getTopicById(id)
-                let topicUser = await getUserDetail(topic.data.author.loginname)
 
-                // 判断评论的用户是否是作者
-                let loginname = topic.data.author.loginname
-                topic.data.replies.forEach(reply => {
-                    if (reply.author.loginname === loginname) {
-                        reply.isAuthor = true
+                if (topic.success) {
+                    let topicUser = await getUserDetail(topic.data.author.loginname)
+
+                    // 判断评论的用户是否是作者
+                    let loginname = topic.data.author.loginname
+                    topic.data.replies.forEach(reply => {
+                        if (reply.author.loginname === loginname) {
+                            reply.isAuthor = true
+                        }
+                    })
+
+                    return {
+                        topic: topic.data,
+                        topicUser: topicUser.data
                     }
-                })
-
-                return {
-                    topic: topic.data,
-                    topicUser: topicUser.data
+                } else {
+                    // { success: false, error_msg: '不是有效的话题id' }
                 }
+
             } catch (e) {
                 console.log(e)
             }

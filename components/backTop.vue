@@ -22,11 +22,8 @@
         mounted() {
             window.addEventListener('scroll', () => {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-                if (scrollTop >= this.top) {
-                    this.show = true
-                } else {
-                    this.show = false
-                }
+
+                this.show = scrollTop >= this.top
             })
         },
         methods: {

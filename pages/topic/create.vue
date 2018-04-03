@@ -43,7 +43,7 @@
         middleware: 'auth',
         async asyncData({ params }) {
             let id = params.id
-            // 根据id判断topic是创建还是编辑,是创建则直接return
+            // 根据有无id判断topic是创建还是编辑,是创建则直接return
             if (!id) return
 
             try {
