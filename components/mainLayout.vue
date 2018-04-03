@@ -23,7 +23,6 @@
             max-width 1095px
             width calc(100% - 290px - 15px)
         .slidebar
-            flex 0 0 290px
             width 290px
             margin-left 15px
 

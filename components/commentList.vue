@@ -130,6 +130,7 @@
                     margin-right 10px
                 .reply-info
                     flex 1
+                    overflow hidden
                     .info
                         font-size 14px
                         margin-bottom 4px

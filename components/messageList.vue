@@ -26,11 +26,14 @@
         color #333
         border-bottom 1px solid #f0f0f0
         padding 10px
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
         &:last-child
             border-bottom none
-    .link
-        color #08c
-        &:hover
-            text-decoration underline
-            color #005580
+        .link
+            color #08c
+            &:hover
+                text-decoration underline
+                color #005580
 </style>

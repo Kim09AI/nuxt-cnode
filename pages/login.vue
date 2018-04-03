@@ -87,7 +87,7 @@
             .input
                 padding 4px 6px
                 height 20px
-                font-size 4px
+                font-size 14px
                 color #555
                 border-radius 4px
                 max-width 270px
