@@ -29,6 +29,9 @@ export const topicCollect = (id, collect) => {
     })
 }
 
+// 获取用户收藏的主题
+export const getTopicCollect = (loginname) => axios.get(`/topic_collect/${loginname}`)
+
 // 获取用户详情
 export const getUserDetail = (loginname) => axios.get(`/user/${loginname}`)
 

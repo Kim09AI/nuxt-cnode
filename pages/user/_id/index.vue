@@ -8,6 +8,9 @@
                     <span class="name">{{ userDetail.loginname }}</span>
                 </div>
                 <div class="score">{{ userDetail.score }}&nbsp;积分</div>
+                <div class="collect" v-if="topicCollect.length > 0">
+                    <nuxt-link :to="`/user/${userDetail.loginname}/collections`">{{ topicCollect.length }}个话题收藏</nuxt-link>
+                </div>
                 <div class="github-wrapper">
                     <i class="iconfont icon">&#xe6a4;</i>
                     <a class="github" :href="`https://github.com/${userDetail.loginname}`" target="_blank">@{{ userDetail.loginname }}</a>
@@ -18,14 +21,14 @@
                 <div class="title">最近创建的话题</div>
                 <topic-list :topicList="userDetail.recent_topics"/>
                 <div class="more">
-                    <nuxt-link to="/">查看更多»</nuxt-link>
+                    <nuxt-link :to="$route.fullPath">查看更多»</nuxt-link>
                 </div>
             </div>
             <div class="topic-list-wrapper">
                 <div class="title">最近参与的话题</div>
                 <topic-list :topicList="userDetail.recent_replies"/>
                 <div class="more">
-                    <nuxt-link to="/">查看更多»</nuxt-link>
+                    <nuxt-link :to="$route.fullPath">查看更多»</nuxt-link>
                 </div>
             </div>
         </div>
@@ -38,17 +41,15 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
     import userInfoPanel from '~/components/userInfoPanel'
     import topicCreatePanel from '~/components/topicCreatePanel'
     import clientPanel from '~/components/clientPanel'
     import tabHeader from '~/components/tabHeader'
     import topicList from '~/components/topicList'
-    import { getUserDetail } from '~/api'
+    import { getUserDetail, getTopicCollect } from '~/api'
 
     export default {
         name: 'userInfo',
-        middleware: 'auth',
         head() {
             let loginname = this.userDetail.loginname
 
@@ -60,11 +61,15 @@
             let loginname = params.id
 
             try {
-                let res = await getUserDetail(loginname)
+                let [userDetail, topicCollect] = await Promise.all([
+                    getUserDetail(loginname),
+                    getTopicCollect(loginname)
+                ])
 
-                if (res.success) {
+                if (userDetail.success && topicCollect.success) {
                     return {
-                        userDetail: res.data
+                        userDetail: userDetail.data,
+                        topicCollect: topicCollect.data
                     }
                 }
             } catch (e) {
@@ -98,6 +103,9 @@
         .score
             font-size 14px
             color #333333
+            margin-top 15px
+        .collect
+            font-size 14px
             margin-top 15px
         .github-wrapper
             margin-top 15px

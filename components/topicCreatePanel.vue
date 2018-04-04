@@ -1,12 +1,19 @@
 <template>
-    <div class="post-topic">
+    <div class="post-topic" v-if="isLogin">
         <nuxt-link class="btn" to="/topic/create">发布话题</nuxt-link>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     export default {
-        name: 'topicCreatePanel'
+        name: 'topicCreatePanel',
+        computed: {
+            ...mapGetters([
+                'isLogin'
+            ])
+        }
     }
 </script>
 

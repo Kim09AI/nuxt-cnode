@@ -16,7 +16,7 @@
         </div>
         <div slot="slidebar">
             <user-info-panel v-if="isLogin" title="个人信息" :user="user"/>
-            <topic-create-panel v-if="isLogin"/>
+            <topic-create-panel/>
             <panel title="无人回复的话题" :list="noReplyList" @onItemClick="noReplyListHandler"/>
             <client-panel/>
         </div>
