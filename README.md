@@ -1,6 +1,10 @@
 # nuxt-cnode
 
-> Nuxt.js project
+> 基于vue的nuxt框架仿的cnode社区服务端渲染，主要是为了seo优化以及首屏加载速度
+
+
+线上地址 [http://www.foreversnsd.cn:3000][1]
+github地址 [https://github.com/Kim09AI/nuxt-cnode][2]
 
 ### 技术栈
 - vue
@@ -107,7 +111,7 @@
 - 登录/退出
 - 未读消息页
 
-
+> 若该项目对你有帮助，欢迎 star
 
 ## Build Setup
 
@@ -127,3 +131,11 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+
+
+  [1]: http://www.foreversnsd.cn:3000
+  [2]: https://github.com/Kim09AI/nuxt-cnode
+  [3]: http://47.106.94.19:3000/node%E7%A4%BE%E5%8C%BA.png
+  [4]: http://47.106.94.19:3000/nuxt-cnode.png
+  [5]: http://47.106.94.19:3000/%E6%95%B0%E6%8D%AE.png
+  [6]: http://47.106.94.19:3000/%E6%9C%80%E5%90%8E%E5%9B%9E%E5%A4%8D%E6%97%B6%E9%97%B4%E5%8F%8A%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4.png

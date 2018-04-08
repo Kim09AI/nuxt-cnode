@@ -19,7 +19,10 @@
             },
             showPage: { // 要展示的页码数量
                 type: Number,
-                default: 5
+                default: 5,
+                validator(value) {
+					return value % 2 === 1 && value >= 1
+				}
             },
             total: { // 总页数，接口里没有，给个默认值
                 type: Number,

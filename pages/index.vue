@@ -94,11 +94,11 @@
             ])
         },
         watch: {
-            '$route'(to) {
+            async '$route'(to) {
                 this.tab = to.query.tab || 'all'
                 this.page = Number(to.query.page) || 1
 
-                this.getTopics()
+                await this.getTopics()
                 scrollFunc.scrollToTop()
             }
         },

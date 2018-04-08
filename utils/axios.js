@@ -31,7 +31,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
     return response && response.data
 }, err => {
-    // 错误处理
+    // 错误处理, 处理success为false的情况
     if (err.response && err.response.data) {
         return Promise.resolve(err.response.data)
     }

@@ -100,6 +100,10 @@
                     }
                 } else {
                     // { success: false, error_msg: '不是有效的话题id' }
+                    return {
+                        topic: {},
+                        topicUser: {}
+                    }
                 }
 
             } catch (e) {
@@ -293,7 +297,7 @@
                 display flex
                 justify-content space-between
                 .left
-                    max-width 80%
+                    max-width 70%
                     span:before
                         content: ' • '
                 .collection
