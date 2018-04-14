@@ -8,12 +8,14 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
+    "startByPm2": "pm2 start --name nuxt-cnode ./node_modules/nuxt/bin/nuxt-start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
     "qs": "^6.5.1",
@@ -29,10 +31,10 @@
     "stylus-loader": "^3.0.2"
   },
   "keywords": [
-      "vue",
-      "vue-router",
-      "vuex",
-      "nuxt",
-      "cnode"
+    "vue",
+    "vue-router",
+    "vuex",
+    "nuxt",
+    "cnode"
   ]
 }
