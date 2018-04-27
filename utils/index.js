@@ -27,20 +27,6 @@ export const tabs = {
     dev: '测试'
 }
 
-// 获取accesstoken
-export const getAccessToken = (config) => {
-    let accesstoken
-
-    if (process.browser) { // 浏览器
-        const Cookie = require('js-cookie')
-        accesstoken = Cookie.get('access_token')
-    } else { // 服务端渲染
-        accesstoken = config.accesstoken
-    }
-
-    return accesstoken
-}
-
 // 解析请求头cookie的指定name值
 export const parseCookieByName = (cookie, name) => {
     if (!cookie || !name) return ''

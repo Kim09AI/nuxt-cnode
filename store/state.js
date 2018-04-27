@@ -1,6 +1,7 @@
 const state = () => ({
     isLogin: false,
-    user: {}
+    user: {},
+    accessToken: ''
 })
 
 export default state

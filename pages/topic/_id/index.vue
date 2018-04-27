@@ -57,7 +57,6 @@
     import commentList from '~/components/commentList'
     import userInfoPanel from '~/components/userInfoPanel'
     import markdown from '~/components/markdown'
-    import { getTopicById, getUserDetail, topicCollect, createReplies, replyLike } from '~/api/index'
     import { tabFormatMixin } from '~/mixins'
 
     // 根据评论结构创建一条评论
@@ -78,13 +77,13 @@
     export default {
         name: 'topic',
         mixins: [tabFormatMixin],
-        async asyncData({ params }) {
+        async asyncData({ params, store }) {
             try {
                 let id = params.id
-                let topic = await getTopicById(id)
+                let topic = await store.$axios.getTopicById(id)
 
                 if (topic.success) {
-                    let topicUser = await getUserDetail(topic.data.author.loginname)
+                    let topicUser = await store.$axios.getUserDetail(topic.data.author.loginname)
 
                     // 判断评论的用户是否是作者
                     let loginname = topic.data.author.loginname
@@ -139,7 +138,7 @@
             },
             async createReplies(value) { // 创建文章的评论
                 try {
-                    let res = await createReplies(this.topic.id, value)
+                    let res = await this.$axios.createReplies(this.topic.id, value)
                     if (res.success) {
                         let markdown = this.$refs.markdown.getMarkdown()
                         this.$refs.markdown.clear()
@@ -171,7 +170,7 @@
             },
             async createCommentReply(value, replyId, markdown) { // 创建评论的评论
                 try {
-                    let res = await createReplies(this.topic.id, value, replyId)
+                    let res = await this.$axios.createReplies(this.topic.id, value, replyId)
 
                     if (res.success) {
                         this.addReplies(markdown, res.reply_id)
@@ -201,7 +200,7 @@
             async collection() {
                 try {
                     let { id, is_collect } = this.topic
-                    let res = await topicCollect(id, !is_collect)
+                    let res = await this.$axios.topicCollect(id, !is_collect)
                     if (res.success) {
                         this.topic.is_collect = !is_collect
                     }
@@ -227,7 +226,7 @@
 
                 try {
                     let id = reply.id
-                    let res = await replyLike(id)
+                    let res = await this.$axios.replyLike(id)
                     if (res.success) {
                         if (res.action === 'up') {
                             reply.ups.push(this.user.id)

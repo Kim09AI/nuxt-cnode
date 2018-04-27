@@ -1,6 +1,6 @@
 import originAxios from 'axios'
 import qs from 'qs'
-import { getAccessToken } from './index'
+import Api from '../api'
 
 const axios = originAxios.create({
     baseURL: 'https://cnodejs.org/api/v1',
@@ -10,22 +10,6 @@ const axios = originAxios.create({
         }
     }
 })
-
-// 请求拦截器
-axios.interceptors.request.use(config => {
-    let accesstoken = getAccessToken(config)
-
-    if (config.method === 'get') {
-        config.params = config.params || {}
-        accesstoken && (config.params.accesstoken = accesstoken)
-    } else if (config.method === 'post') {
-        config.data = config.data || {}
-        accesstoken && (config.data.accesstoken = accesstoken)
-        config.data = qs.stringify(config.data)
-    }
-
-    return config
-}, err => Promise.reject(err))
 
 // 响应拦截器
 axios.interceptors.response.use(response => {
@@ -38,4 +22,37 @@ axios.interceptors.response.use(response => {
     return Promise.reject(err)
 })
 
-export default axios
+class CreateAxios extends Api {
+    constructor(store) {
+        super(store)
+        this.store = store
+    }
+
+    getAccessToken() {
+        return this.store.state.accessToken
+    }
+
+    get(url, config = {}) {
+        let accessToken = this.getAccessToken()
+
+        config.params = config.params || {}
+        // 变量是accessToken 做参数时全小写accesstoken
+        accessToken && (config.params.accesstoken = accessToken)
+
+        return axios.get(url, config)
+    }
+
+    post(url, data = {}, config = {}) {
+        let accessToken = this.getAccessToken()
+
+        accessToken && (data.accesstoken = accessToken)
+
+        return axios.post(url, qs.stringify(data), config)
+    }
+
+    // 实例保存在store.$axios上，返回服务端渲染结果是会用JSON.stringify对store处理
+    // 添加toJSON绕过JSON.stringify
+    toJSON() {}
+}
+
+export default CreateAxios

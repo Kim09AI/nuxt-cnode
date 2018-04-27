@@ -13,3 +13,12 @@ export const tabFormatMixin = {
         }
     }
 }
+
+export const axiosMixin = {
+    beforeCreate() {
+        // 原因未知，前面有几个组件beforeCreate的this.$store为undefined
+        if (this.$store && this.$store.$axios) {
+            this.$axios = this.$store.$axios
+        }
+    }
+}

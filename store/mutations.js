@@ -6,6 +6,9 @@ const mutations = {
     },
     [types.SET_USER_INFO](state, user = {}) {
         state.user = user
+    },
+    [types.SET_ACCESS_TOKEN](state, accessToken) {
+        state.accessToken = accessToken
     }
 }
 

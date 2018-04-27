@@ -20,17 +20,16 @@
     import clientPanel from '~/components/clientPanel'
     import topicList from '~/components/topicList'
     import pageNav from '~/components/pageNav'
-    import { getUserDetail, getTopicCollect } from '~/api'
 
     export default {
         name: 'collections',
-        async asyncData({ params }) {
+        async asyncData({ params, store }) {
             let loginname = params.id
 
             try {
                 let [userDetail, topicCollect] = await Promise.all([
-                    getUserDetail(loginname),
-                    getTopicCollect(loginname)
+                    store.$axios.getUserDetail(loginname),
+                    store.$axios.getTopicCollect(loginname)
                 ])
 
                 if (userDetail.success && topicCollect.success) {

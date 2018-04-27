@@ -58,9 +58,8 @@ module.exports = {
     },
     plugins: [
         { src: '~plugins/babel-polyfill', ssr: false },
-        '~plugins/component',
-        '~plugins/filter',
-        '~plugins/ssrAccessToken'
+        '~plugins/index',
+        '~plugins/filter'
     ],
     router: {
         extendRoutes(routes) {

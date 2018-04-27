@@ -36,18 +36,17 @@
 <script>
     import markdown from '~/components/markdown'
     import tabHeader from '~/components/tabHeader'
-    import { createTopic, getTopicById, topicUpdate } from '~/api'
 
     export default {
         name: 'create',
         middleware: 'auth',
-        async asyncData({ params }) {
+        async asyncData({ params, store }) {
             let id = params.id
             // 根据有无id判断topic是创建还是编辑,是创建则直接return
             if (!id) return
 
             try {
-                let topic = await getTopicById(id, false)
+                let topic = await store.$axios.getTopicById(id, false)
 
                 return {
                     topic: topic.data
@@ -108,7 +107,7 @@
             },
             async createTopic() {
                 try {
-                    let res = await createTopic(this.title, this.value)
+                    let res = await this.$axios.createTopic(this.title, this.value)
 
                     if (res.success) {
                         this.$router.push(`/topic/${res.topic_id}`)
@@ -121,7 +120,7 @@
             async topicUpdate() {
                 try {
                     let { id } = this.topic
-                    let res = await topicUpdate(id, this.title, this.value, this.tab)
+                    let res = await this.$axios.topicUpdate(id, this.title, this.value, this.tab)
 
                     if (res.success) {
                         this.$router.go(-1)

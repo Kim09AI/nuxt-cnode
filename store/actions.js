@@ -1,21 +1,22 @@
 import * as types from './mutation-types'
-import { getUserDetail, checkAccesstoken } from '~/api'
 import { parseCookieByName } from '~/utils'
 
-export const nuxtServerInit = async ({ commit, dispatch }, { req }) => {
+export const nuxtServerInit = async ({ commit, dispatch, state }, { req }) => {
     let accessToken = parseCookieByName(req.headers.cookie, 'access_token')
 
     if (!!accessToken) {
         try {
-            let res = await checkAccesstoken(accessToken)
+            let res = await state.$axios.checkAccesstoken(accessToken)
+
             if (res.success) {
-                let userDetail = await getUserDetail(res.loginname)
+                let userDetail = await state.$axios.getUserDetail(res.loginname)
                 userDetail.data.id = res.id
 
                 // 提交登录状态及用户信息
-                dispatch('setLoginAndUser', {
+                dispatch('setUserInfo', {
                     loginState: true,
-                    user: userDetail.data
+                    user: userDetail.data,
+                    accessToken: accessToken
                 })
             }
         } catch (e) {
@@ -24,7 +25,8 @@ export const nuxtServerInit = async ({ commit, dispatch }, { req }) => {
     }
 }
 
-export const setLoginAndUser = ({ commit }, { loginState, user }) => {
+export const setUserInfo = ({ commit }, { loginState, user, accessToken }) => {
     commit(types.SET_LOGIN_STATE, loginState)
     commit(types.SET_USER_INFO, user)
+    commit(types.SET_ACCESS_TOKEN, accessToken)
 }

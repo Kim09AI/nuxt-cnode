@@ -35,11 +35,11 @@
 
     export default {
         name: 'index',
-        async asyncData({ query }) {
+        async asyncData({ query, store }) {
             let { tab, page } = query
 
             try {
-                let res = await getTopics(page, tab)
+                let res = await store.$axios.getTopics(page, tab)
                 if (res.success) {
                     return {
                         list: res.data
@@ -67,7 +67,7 @@
         methods: {
             async getTopics() {
                 try {
-                    let res = await getTopics(this.page, this.tab)
+                    let res = await this.$axios.getTopics(this.page, this.tab)
                     if (res.success) {
                         this.list = res.data
                     }

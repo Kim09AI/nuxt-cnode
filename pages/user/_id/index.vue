@@ -46,7 +46,6 @@
     import clientPanel from '~/components/clientPanel'
     import tabHeader from '~/components/tabHeader'
     import topicList from '~/components/topicList'
-    import { getUserDetail, getTopicCollect } from '~/api'
 
     export default {
         name: 'userInfo',
@@ -57,13 +56,13 @@
                 title: `@${loginname} - CNode：Node.js专业中文社区`
             }
         },
-        async asyncData({ params }) {
+        async asyncData({ params, store }) {
             let loginname = params.id
 
             try {
                 let [userDetail, topicCollect] = await Promise.all([
-                    getUserDetail(loginname),
-                    getTopicCollect(loginname)
+                    store.$axios.getUserDetail(loginname),
+                    store.$axios.getTopicCollect(loginname)
                 ])
 
                 if (userDetail.success && topicCollect.success) {

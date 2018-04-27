@@ -63,7 +63,7 @@
         },
         methods: {
             ...mapActions([
-                'setLoginAndUser'
+                'setUserInfo'
             ]),
             toggleFocus(e) {
                 this.isFocus = e.type === 'focus'
@@ -83,9 +83,10 @@
             },
             loginOut() {
                 Cookie.remove('access_token')
-                this.setLoginAndUser({
+                this.setUserInfo({
                     loginState: false,
-                    user: {}
+                    user: {},
+                    accessToken: ''
                 })
                 this.$router.push('/')
             }

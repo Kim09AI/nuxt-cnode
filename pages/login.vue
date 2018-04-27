@@ -18,7 +18,6 @@
 <script>
     import { mapActions } from 'vuex'
     import tabHeader from '~/components/tabHeader'
-    import { getUserDetail, checkAccesstoken } from '~/api'
 
     let Cookie
 
@@ -39,7 +38,7 @@
         },
         methods: {
             ...mapActions([
-                'setLoginAndUser'
+                'setUserInfo'
             ]),
             login() {
                 if (!this.accessToken) {
@@ -51,14 +50,15 @@
             },
             async checkAccesstoken() {
                 try {
-                    let res = await checkAccesstoken(this.accessToken)
+                    let res = await this.$axios.checkAccesstoken(this.accessToken)
                     if (res.success) {
-                        let userDetail = await getUserDetail(res.loginname)
+                        let userDetail = await this.$axios.getUserDetail(res.loginname)
                         userDetail.data.id = res.id
 
-                        this.setLoginAndUser({
+                        this.setUserInfo({
                             loginState: true,
-                            user: userDetail.data
+                            user: userDetail.data,
+                            accessToken: this.accessToken
                         })
 
                         Cookie.set('access_token', this.accessToken, { expires: 30 })

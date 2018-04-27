@@ -27,14 +27,13 @@
     import topicCreatePanel from '~/components/topicCreatePanel'
     import clientPanel from '~/components/clientPanel'
     import messageList from '~/components/messageList'
-    import { getMessages, messageMarkAll } from '~/api'
 
     export default {
         name: 'messages',
         middleware: 'auth',
-        async asyncData() {
+        async asyncData({ store }) {
             try {
-                let res = await getMessages()
+                let res = await store.$axios.getMessages()
 
                 if (res.success) {
                     return {
@@ -58,7 +57,7 @@
         methods: {
             async messageMarkAll() {
                 if (this.notReadMessages.length) {
-                    await messageMarkAll()
+                    await this.$axios.messageMarkAll()
                 }
             }
         },

@@ -1,3 +1,5 @@
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE'
 
 export const SET_USER_INFO = 'SET_USER_INFO'
+
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
