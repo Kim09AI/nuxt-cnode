@@ -133,7 +133,7 @@ $ npm run generate
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
 
-  [1]: http://www.foreversnsd.cn:3000
+  [1]: http://47.106.94.19:3000/
   [2]: https://github.com/Kim09AI/nuxt-cnode
   [3]: http://47.106.94.19:3000/node%E7%A4%BE%E5%8C%BA.png
   [4]: http://47.106.94.19:3000/nuxt-cnode.png
