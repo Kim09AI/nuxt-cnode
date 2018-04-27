@@ -18,6 +18,15 @@ const store = () => {
 
     store.$axios = store.state.$axios =  new CreateAxios(store)
 
+    if (process.browser) {
+        let replaceState = store.replaceState.bind(store)
+        store.replaceState = (...args) => {
+            replaceState(...args)
+            store.state.$axios = store.$axios
+            replaceState = null
+        }
+    }
+
     return store
 }
 
