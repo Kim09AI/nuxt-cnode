@@ -3,7 +3,7 @@
 > 基于vue的nuxt框架仿的cnode社区服务端渲染，主要是为了seo优化以及首屏加载速度
 
 
-线上地址 [http://www.foreversnsd.cn:3000][1]
+线上地址 [http://nuxt-cnode.foreversnsd.cn][1]
 github地址 [https://github.com/Kim09AI/nuxt-cnode][2]
 
 ### 技术栈
@@ -133,7 +133,7 @@ $ npm run generate
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
 
-  [1]: http://47.106.94.19:3000/
+  [1]: http://nuxt-cnode.foreversnsd.cn/
   [2]: https://github.com/Kim09AI/nuxt-cnode
   [3]: http://47.106.94.19:3000/node%E7%A4%BE%E5%8C%BA.png
   [4]: http://47.106.94.19:3000/nuxt-cnode.png

@@ -26,6 +26,9 @@
                 新手搭建 Node.js 服务器，推荐使用无需备案的
                 <a class="link" href="https://www.digitalocean.com/?refcode=eba02656eeb3" target="_blank">DigitalOcean(https://www.digitalocean.com/)</a>
             </p>
+            <p style="text-align: center;">
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18050116号</a>
+            </p>
         </div>
     </div>
 </template>
