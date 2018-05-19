@@ -19,9 +19,7 @@
     "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
     "qs": "^6.5.1",
-    "simplemde": "^1.11.2"
-  },
-  "devDependencies": {
+    "simplemde": "^1.11.2",
     "babel-eslint": "^8.2.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
@@ -29,6 +27,9 @@
     "eslint-plugin-vue": "^4.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2"
+  },
+  "devDependencies": {
+    
   },
   "keywords": [
     "vue",
