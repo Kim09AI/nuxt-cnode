@@ -41,7 +41,7 @@ module.exports = {
     ** Build configuration
     */
     build: {
-        vendor: ['axios', 'simplemde', 'js-cookie', 'qs'],
+        vendor: ['axios', 'simplemde', 'js-cookie', 'qs', 'babel-polyfill'],
         /*
         ** Run ESLint on save
         */

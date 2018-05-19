@@ -36,7 +36,6 @@ class CreateAxios extends Api {
         let accessToken = this.getAccessToken()
 
         config.params = config.params || {}
-        // 变量是accessToken 做参数时全小写accesstoken
         accessToken && (config.params.accesstoken = accessToken)
 
         return axios.get(url, config)
@@ -50,7 +49,7 @@ class CreateAxios extends Api {
         return axios.post(url, qs.stringify(data), config)
     }
 
-    // 实例保存在store.$axios上，返回服务端渲染结果是会用JSON.stringify对store处理
+    // 返回服务端渲染结果时会用JSON.stringify对state处理,因为store与$axios实例循环引用会导致无法序列化
     // 添加toJSON绕过JSON.stringify
     toJSON() {}
 }

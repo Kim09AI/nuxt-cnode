@@ -8,7 +8,7 @@ import CreateAxios from '../utils/axios'
 
 Vue.use(Vuex)
 
-const store = () => {
+const createStore = () => {
     let store = new Vuex.Store({
         state,
         getters,
@@ -30,4 +30,4 @@ const store = () => {
     return store
 }
 
-export default store
+export default createStore

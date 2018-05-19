@@ -111,6 +111,100 @@ github地址 [https://github.com/Kim09AI/nuxt-cnode][2]
 - 登录/退出
 - 未读消息页
 
+### cookie的共享
+只要做服务端渲染，不管是vue还是react，都必然会遇到cookie共享的问题，因为在服务器上不会为请求自动带cookie,所以需要手动来为请求带上cookie，以下方法主要是借鉴vue-srr导出一个创建app、router、store工厂函数的方法，导出一个创建axios的工厂函数，然后把创建的axios实例注入store,建立store与axios一一对应的关系，
+然后就可以通过store.$axios或state.$axios去请求就会自动带cookie了
+
+#### 首先获取cookie中的东西放到store.state
+```js
+export const nuxtServerInit = async ({ commit, dispatch, state }, { req }) => {
+    let accessToken = parseCookieByName(req.headers.cookie, 'access_token')
+
+    if (!!accessToken) {
+        try {
+            let res = await state.$axios.checkAccesstoken(accessToken)
+
+            if (res.success) {
+                let userDetail = await state.$axios.getUserDetail(res.loginname)
+                userDetail.data.id = res.id
+
+                // 提交登录状态及用户信息
+                dispatch('setUserInfo', {
+                    loginState: true,
+                    user: userDetail.data,
+                    accessToken: accessToken
+                })
+            }
+        } catch (e) {
+            console.log('fail in nuxtServerInit', e.message)
+        }
+    }
+}
+```
+#### 导出一个创建axios的工厂函数
+```js
+class CreateAxios extends Api {
+    constructor(store) {
+        super(store)
+        this.store = store
+    }
+
+    getAccessToken() {
+        return this.store.state.accessToken
+    }
+
+    get(url, config = {}) {
+        let accessToken = this.getAccessToken()
+
+        config.params = config.params || {}
+        accessToken && (config.params.accesstoken = accessToken)
+
+        return axios.get(url, config)
+    }
+
+    post(url, data = {}, config = {}) {
+        let accessToken = this.getAccessToken()
+
+        accessToken && (data.accesstoken = accessToken)
+
+        return axios.post(url, qs.stringify(data), config)
+    }
+
+    // 返回服务端渲染结果时会用JSON.stringify对state处理,因为store与$axios实例循环引用会导致无法序列化
+    // 添加toJSON绕过JSON.stringify
+    toJSON() {}
+}
+
+export default CreateAxios
+```
+#### 在创建store时创建axios并把axios注入store
+```js
+const createStore = () => {
+    let store = new Vuex.Store({
+        state,
+        getters,
+        mutations,
+        actions
+    })
+
+    store.$axios = store.state.$axios =  new CreateAxios(store)
+
+    if (process.browser) {
+        let replaceState = store.replaceState.bind(store)
+        store.replaceState = (...args) => {
+            replaceState(...args)
+            store.state.$axios = store.$axios
+            replaceState = null
+        }
+    }
+
+    return store
+}
+
+export default createStore
+```
+之后就可以在asyncData函数中使用store.$axios、在组件内使用this.$store.$axios、在axtion中使用state.$axios或rootState.$axios发起请求了，这些请求都会自动的带上cookie中的东西
+
 > 若该项目对你有帮助，欢迎 star
 
 ## Build Setup
